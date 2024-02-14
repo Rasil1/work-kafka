@@ -59,12 +59,44 @@ spec:
     listeners:
       - name: plain
         port: 9092
-        type: internal
+        type: loadbalancer
         tls: false
+        configuration:
+          bootstrap:
+            annotations:
+              networking.gke.io/load-balancer-type: "Internal"
+          brokers:
+          - broker: 0
+            annotations:
+              networking.gke.io/load-balancer-type: "Internal"
+          brokers:
+          - broker: 1
+            annotations:
+              networking.gke.io/load-balancer-type: "Internal"
+          brokers:
+          - broker: 2
+            annotations:
+              networking.gke.io/load-balancer-type: "Internal"            
       - name: tls
         port: 9093
-        type: internal
+        type: loadbalancer
         tls: true
+        configuration:
+          bootstrap:
+            annotations:
+              networking.gke.io/load-balancer-type: "Internal"
+          brokers:
+          - broker: 0
+            annotations:
+              networking.gke.io/load-balancer-type: "Internal"
+          brokers:
+          - broker: 1
+            annotations:
+              networking.gke.io/load-balancer-type: "Internal"
+          brokers:
+          - broker: 2
+            annotations:
+              networking.gke.io/load-balancer-type: "Internal"                 
     config:
       offsets.topic.replication.factor: 3
       transaction.state.log.replication.factor: 3
